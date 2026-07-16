@@ -44,6 +44,7 @@ public class RedisServer {
         private final Socket clientSocket;
         private OutputStream out;
         private BufferedInputStream in;
+        private final RespParser parser = new RespParser(in);
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -57,9 +58,7 @@ public class RedisServer {
                 in = new BufferedInputStream(clientSocket.getInputStream());
                 out = clientSocket.getOutputStream();
 
-                RespParser parser = new RespParser(in);
                 RespValue request = parser.parse();
-
 /*                RespValue response = handle(request); // your logic
                 out.write(response.encode());*/
 

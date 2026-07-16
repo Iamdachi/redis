@@ -1,5 +1,27 @@
 # redis - build "your own" Redis
 
+## Design of the project
+```
+Main:
+    start RedisServer
+
+RedisServer:
+    initialize server socket
+    while (true) handle client sockets
+    
+    define clientHandler - Thread:
+        RespParser(inputStream)
+        each connection/request is handled here
+        write response to outputStream
+
+RespParser(inputStream):
+    parse input bytes and return RespValue
+
+RespValue:
+    provide Data Classes/records for RESP protocol
+```
+
+
 ## Todo:
 ### Introduction
 - Local Setup
