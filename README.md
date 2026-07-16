@@ -1,93 +1,149 @@
-# redis
+# redis - build "your own" Redis
 
+## Todo:
+### Introduction
+- Local Setup
+- Bind to a port
+- Respond to PING
+- Respond to multiple PINGs
+- Handle concurrent clients ()
+- Implement the ECHO command (start building a RESP parser)
+- Implement the SET & GET commands
+- Expiry
 
+### Lists
+- Create a list
+- Append an element
+- Append multiple elements
+- List elements (positive indexes)
+- List elements (negative indexes)
+- Prepend elements
+- Query list length
+- Remove an element
+- Remove multiple elements
+- Blocking retrieval
+- Blocking retrieval with timeout
 
-## Getting started
+### Streams
+- The TYPE command
+- Create a stream
+- Validating entry IDs
+- Partially auto-generated IDs
+- Fully auto-generated IDs
+- Query entries from stream
+- Query with -
+- Query with +
+- Query single stream using XREAD
+- Query multiple streams using XREAD
+- Blocking reads
+- Blocking reads without timeout
+- Blocking reads using $
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+### Transactions
+- The INCR command (1/3)
+- The INCR command (2/3)
+- The INCR command (3/3)
+- The MULTI command
+- The EXEC command
+- Empty transaction
+- Queueing commands
+- Executing a transaction
+- The DISCARD command
+- Failures within transactions
+- Multiple transactions
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Optimistic Locking
 
-## Add your files
+- The WATCH command
+- WATCH inside transaction
+- Tracking key modifications
+- Watching multiple keys
+- Watching missing keys
+- The UNWATCH command
+- Unwatch on EXEC
+- Unwatch on DISCARD
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+### Replication
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/dachi.ozedginidze/redis.git
-git branch -M main
-git push -uf origin main
-```
+- Configure listening port
+- The INFO command
+- The INFO command on a replica
+- Initial replication ID and offset
+- Send handshake (1/3)
+- Send handshake (2/3)
+- Send handshake (3/3)
+- Receive handshake (1/2)
+- Receive handshake (2/2)
+- Empty RDB transfer
+- Single-replica propagation
+- Multi-replica propagation
+- Command processing
+- ACKs with no commands
+- ACKs with commands
+- WAIT with no replicas
+- WAIT with no commands
+- WAIT with multiple commands
 
-## Integrate with your tools
+### RDB Persistence
 
-* [Set up project integrations](https://gitlab.com/dachi.ozedginidze/redis/-/settings/integrations)
+- RDB file config
+- Read a key
+- Read a string value
+- Read multiple keys
+- Read multiple string values
+- Read value with expiry
 
-## Collaborate with your team
+### AOF Persistence
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+- Default AOF options
+- AOF options from flags
+- Create append-only directory
+- Create append-only file
+- Create manifest file
+- Write a single command
+- Write multiple commands
+- Filter write commands
+- Replay a single command
+- Replay multiple commands
 
-## Test and Deploy
+### Pub/Sub
 
-Use the built-in continuous integration in GitLab.
+- Subscribe to a channel
+- Subscribe to multiple channels
+- Enter subscribed mode
+- PING in subscribed mode
+- Publish a message
+- Deliver messages
+- Unsubscribe
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+### Sorted Sets
+- Create a sorted set
+- Add members
+- Retrieve member rank
+- List sorted set members
+- ZRANGE with negative indexes
+- Count sorted set members
+- Retrieve member score
+- Remove a member
 
-***
+### Geospatial Commands
 
-# Editing this README
+- Respond to GEOADD
+- Validate coordinates
+- Store a location
+- Calculate location score
+- Respond to GEOPOS
+- Decode coordinates
+- Calculate distance
+- Search within radius
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Authentication
+- Respond to ACL WHOAMI
+- Respond to ACL GETUSER
+- The nopass flag
+- The passwords property
+- Setting default user password
+- The AUTH command
+- Enforce authentication
+- Authenticate using AUTH
+>>>>>>> ef36c63 (first steps)
