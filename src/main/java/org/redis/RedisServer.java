@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import static org.redis.RespValue.debugString;
+
 /**
  * Bind server to a port and start handling multiple concurrent clients.
  * Includes ClientHandler as inner static class.
@@ -44,7 +46,7 @@ public class RedisServer {
         private final Socket clientSocket;
         private OutputStream out;
         private BufferedInputStream in;
-        private final RespParser parser = new RespParser(in);
+
 
         public ClientHandler(Socket socket) {
             this.clientSocket = socket;
@@ -58,15 +60,15 @@ public class RedisServer {
                 in = new BufferedInputStream(clientSocket.getInputStream());
                 out = clientSocket.getOutputStream();
 
+                RespParser parser = new RespParser(in);
                 RespValue request = parser.parse();
-/*                RespValue response = handle(request); // your logic
-                out.write(response.encode());*/
 
-                System.out.println(request);
+                RespValue response = RequestHandler.handle(request);
+                out.write(response.encode());
+
+                System.out.println(debugString(request));
                 out.write("+PONG\r\n".getBytes(StandardCharsets.US_ASCII));
                 out.flush();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -3,6 +3,7 @@ package org.redis;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 sealed interface RespValue permits RespSimpleString, RespError, RespInteger, RespBulkString, RespArray, RespNull {
     default byte[] encode() {
@@ -27,6 +28,20 @@ sealed interface RespValue permits RespSimpleString, RespError, RespInteger, Res
             }
         };
     }
+
+    static String debugString(RespValue v) {
+        return switch (v) {
+            case RespBulkString b -> "\"" + new String(b.bytes(), StandardCharsets.US_ASCII) + "\"";
+            case RespSimpleString s -> s.value();
+            case RespInteger i -> String.valueOf(i.value());
+            case RespError e -> e.message();
+            case RespArray a -> a.items().stream()
+                    .map(RespValue::debugString)
+                    .collect(Collectors.joining(", ", "[", "]"));
+            case RespNull n -> "null";
+        };
+    }
+
 
 }
 
