@@ -10,12 +10,16 @@ RedisServer:
     while (true) handle client sockets
     
     define clientHandler - Thread:
-        RespParser(inputStream)
         each connection/request is handled here
+        RespParser(inputStream)
+        RequestHandler.handle(request)
         write response to outputStream
 
 RespParser(inputStream):
     parse input bytes and return RespValue
+    
+RequestHandler()
+    RespValue handle(RespValue request)
 
 RespValue:
     provide Data Classes/records for RESP protocol
