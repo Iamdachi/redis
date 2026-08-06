@@ -172,4 +172,3 @@ RespValue:
 - The AUTH command
 - Enforce authentication
 - Authenticate using AUTH
->>>>>>> ef36c63 (first steps)
