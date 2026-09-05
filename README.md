@@ -27,6 +27,9 @@ RespValue:
 
 
 ## Todo:
+### Test Suite
+- use actual redis-cli to test the features  
+- set up the pipeline  
 ### Introduction
 - Local Setup
 - Bind to a port
