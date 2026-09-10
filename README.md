@@ -1,8 +1,13 @@
 # redis - build "your own" Redis
 ## Redis Documentation and Reading
+https://redis.io/docs/latest/  
 https://redis.io/blog/6-books-new-redis-developers-should-read/  
 https://www.openmymind.net/redis.pdf  
-https://redis.io/docs/latest/  
+
+https://build-your-own.org/redis/  
+https://www.build-redis-from-scratch.dev/en/introduction  
+https://charlesleifer.com/blog/building-a-simple-redis-server-with-python/  
+https://app.codecrafters.io/courses/redis/stages/fv6  
 
 ## Design of the project
 ```
