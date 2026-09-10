@@ -1,4 +1,8 @@
 # redis - build "your own" Redis
+## Redis Documentation and Reading
+https://redis.io/blog/6-books-new-redis-developers-should-read/  
+https://www.openmymind.net/redis.pdf  
+https://redis.io/docs/latest/  
 
 ## Design of the project
 ```
