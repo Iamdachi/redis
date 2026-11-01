@@ -1,5 +1,5 @@
 
-name: Java Redis CI
+name: Redis CI
 
 on:
   push:
@@ -8,21 +8,71 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  integration-test:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Install Java 21
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
+      # 3. Set up Gradle
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run testss
-        run: ./gradlew test
+      # 4. Build and run unit tests
+      - name: Build project
+        run: ./gradlew clean build
+
+      # 5. Install Redis CLI
+      - name: Install redis-cli
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y redis-tools
+
+      # 6. Start your Java Redis server
+      - name: Start Redis server
+        run: |
+          ./gradlew run > server.log 2>&1 &
+          echo $! > server.pid
+
+      # 7. Wait until server responds
+      - name: Wait for Redis server
+        run: |
+          for i in {1..30}; do
+            if redis-cli -h 127.0.0.1 -p 5555 PING 2>/dev/null | grep -qx PONG; then
+              echo "Redis server is ready!"
+              exit 0
+            fi
+            sleep 1
+          done
+
+          echo "Redis server failed to start!"
+          cat server.log
+          exit 1
+
+      # 8. Test Redis commands
+      - name: Test Redis commands
+        run: |
+          echo "Testing PING..."
+          redis-cli -h 127.0.0.1 -p 5555 PING | grep -qx PONG
+
+          echo "Testing ECHO..."
+          redis-cli -h 127.0.0.1 -p 5555 ECHO hey | grep -qx hey
+
+          echo "All integration tests passed!"
+
+      # 9. Show logs if something fails
+      - name: Show server logs
+        if: failure()
+        run: |
+          if [ -f server.log ]; then
+            cat server.log
+          fi

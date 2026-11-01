@@ -1,5 +1,7 @@
+
 plugins {
     id("java")
+    id("application")
 }
 
 group = "org.example"
@@ -10,6 +12,11 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+application {
+    mainClass = "org.redis.Main"
+}
+
 repositories {
     mavenCentral()
 }

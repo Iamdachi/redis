@@ -66,8 +66,8 @@ public class RedisServer {
                 RespValue response = RequestHandler.handle(request);
                 out.write(response.encode());
 
-                System.out.println(debugString(request));
-                out.write("+PONG\r\n".getBytes(StandardCharsets.US_ASCII));
+                //System.out.println(debugString(request));
+                //out.write("+PONG\r\n".getBytes(StandardCharsets.US_ASCII));
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
