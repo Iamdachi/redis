@@ -1,7 +1,14 @@
 package org.redis;
 
+import org.redis.commands.EchoCommand;
+import org.redis.protocol.*;
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+/**
+ * Command Dispatcher: receives a parsed RESP request, identifies a command and delegates execution to handler
+ */
 
 final class RequestHandler {
 
@@ -18,7 +25,9 @@ final class RequestHandler {
         String command = new String(cmdBytes, StandardCharsets.US_ASCII).toUpperCase();
 
         return switch (command) {
-            case "ECHO" -> handleEcho(items);
+            case "ECHO" -> EchoCommand.execute(
+                    items.subList(1, items.size())
+            );
             case "PING" -> new RespSimpleString("PONG");
             default -> new RespError("ERR unknown command '" + command + "'");
         };

@@ -1,11 +1,11 @@
-package org.redis;
+package org.redis.protocol;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-final class RespParser {
+public final class RespParser {
     private BufferedInputStream in;
 
     public RespParser(BufferedInputStream input) {

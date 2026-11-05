@@ -1,11 +1,13 @@
 package org.redis;
 
+import org.redis.protocol.RespEncoder;
+import org.redis.protocol.RespParser;
+import org.redis.protocol.RespValue;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
-import static org.redis.RespValue.debugString;
 
 /**
  * Bind server to a port and start handling multiple concurrent clients.
@@ -64,7 +66,7 @@ public class RedisServer {
                 RespValue request = parser.parse();
 
                 RespValue response = RequestHandler.handle(request);
-                out.write(response.encode());
+                RespEncoder.write(response, out);
 
                 //System.out.println(debugString(request));
                 //out.write("+PONG\r\n".getBytes(StandardCharsets.US_ASCII));
